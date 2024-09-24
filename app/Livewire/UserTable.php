@@ -11,6 +11,7 @@ use PowerComponents\LivewirePowerGrid\Facades\Filter;
 use PowerComponents\LivewirePowerGrid\Facades\PowerGrid;
 use PowerComponents\LivewirePowerGrid\PowerGridFields;
 use PowerComponents\LivewirePowerGrid\PowerGridComponent;
+use PowerComponents\LivewirePowerGrid\Facades\Rule;
 
 final class UserTable extends PowerGridComponent
 {
@@ -29,9 +30,9 @@ final class UserTable extends PowerGridComponent
 			PowerGrid::footer()
 				->showPerPage()
 				->showRecordCount(),
-			// PowerGrid::detail()
-			// 	->view('components.detail')
-			// 	->showCollapseIcon(),
+			PowerGrid::detail()
+				->view('components.detail')
+				->showCollapseIcon(),
 		];
 	}
 
@@ -92,16 +93,25 @@ final class UserTable extends PowerGridComponent
 		$this->js('alert(' . $rowId . ')');
 	}
 
-	public function actions(User $row): array
+	public function actions($row): array
 	{
 		return [
-			Button::add('edit')
-				->slot('Edit: ' . $row->id)
-				->id()
-				->class('pg-btn-white dark:ring-pg-primary-600 dark:border-pg-primary-600 dark:hover:bg-pg-primary-700 dark:ring-offset-pg-primary-800 dark:text-pg-primary-300 dark:bg-pg-primary-700')
-				->dispatch('edit', ['rowId' => $row->id])
+			Button::add('detail')
+				->slot('Detail')
+				->class('bg-blue-500 text-white font-bold py-2 px-2 rounded')
+				->toggleDetail($row->id),
 		];
 	}
+
+	public function actionRules(): array
+	{
+		return [
+			Rule::rows()
+				->when(fn($user) => $user->id == 1)
+				->detailView('components.detail-rules', ['test' => 1]),
+		];
+	}
+
 
 	/*
     public function actionRules($row): array

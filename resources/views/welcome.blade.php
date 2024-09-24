@@ -12,7 +12,6 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <script src="{{ asset('js/app.js') }}"></script>
 
     <!-- Styles -->
     <style>
@@ -863,6 +862,7 @@
     </div>
 
     @livewireScripts
+    <script src="{{ asset('js/app.js') }}"></script>
 </body>
 
 </html>
